@@ -849,6 +849,7 @@ IB-Ignore-Self-Signed-Certs
 IB-Show-Examples
 
 # Clear-Variable ibvar_*
+<#
 if (ib-create-session -wapi_ver v1.2.1) {
     Write-Host "Create a single network..."
     [hashtable]$ibvar_new0       = @{ "network" = "12.0.0.0/24"; "comment" = "net0" }
@@ -950,3 +951,4 @@ if (ib-create-session -wapi_ver v1.2.1) {
     IB-Search 192.168 range | IB-Get-Range | IB-Range-Member-Action -action Add -member gm.lab.local
     IB-Search-Network 192.168 | IB-Get-Network | IB-Write-Data
 }
+#>
