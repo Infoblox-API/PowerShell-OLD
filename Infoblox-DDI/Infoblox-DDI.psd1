@@ -11,7 +11,7 @@
 RootModule = 'Infoblox-DDI.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0'
+ModuleVersion = '0.3'
 
 # ID used to uniquely identify this module
 # GUID = ''
@@ -29,7 +29,7 @@ Copyright = '(c) 2016 Don Smith. All rights reserved.'
 # Description = ''
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '4.0'
+PowerShellVersion = '5.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''

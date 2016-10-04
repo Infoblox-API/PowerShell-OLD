@@ -1,0 +1,39 @@
+Arguments
+
+There can be no arguments to objtype or it can have one or multiple conditions in the following format:
+
+{ field | * attribute [ <space> ] } [ modifiers ] = value
+
+Where:
+
+field is a documented field of the object.
+
+attribute is the name of an extensible attribute. Must be prefixed by an asterisk (*) and optionally followed by a single space.
+
+modifiers is optional and can be one or more search modifiers supported by the field or extensible attribute value type.
+
+value is the value or regular expression to search for.
+
+When combining multiple conditions, all must be satisified in order to match an object (i.e. conditions are combined with AND).
+
+When a field is a list or an extensible attribute that can have multiple values, the condition is true if any value in the list matches.
+
+If no modifiers are used, it is an exact match.
+
+Search Modifiers
+
+A search argument can use the following modifiers:
+
+Modifier    Functionality
+!    Negates the condition.
+:    Makes string matching case insensitive.
+~    Regular expression search. Expressions are unanchored.
+<    Less than or equal.
+>    Greater than or equal.
+Only one of the following can be specified at one time: greater than, less than, and regular expressions.
+
+You can find the modifiers that are supported by each field in the respective documentation. Unsupported combinations will result in an error.
+
+Depending on the attribute type, following are modifiers supported by extensible attributes:
+
+integer and date support !, < and >. All other types behave like strings and support !, ~ and :.

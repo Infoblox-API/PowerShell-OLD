@@ -1,0 +1,39 @@
+curl -k1 -u admin:infoblox -X GET https://172.16.98.15/wapi/v2.1/netork?network_view=external
+
+curl -k1 -u admin:infoblox -X GET https://172.16.98.15/wapi/v2.1/network?member=dhcpmember,172.16.98.15
+
+curl -k1 -u admin:infoblox -X GET https://172.16.98.15/wapi/v2.1/network?member=dhcpmember,172.16.98.15&*Site~=a
+
+regex is really a "contains" option
+ipv4addr is likely not needed since it seems to work identically to network
+
+
+network_view	=	exact text
+
+comment		=	exact text
+comment		:=	case insensitive text (exact string)
+comment		~=	regex (partial string matching / not full regex)
+comment		~:=	case insensitive / regex
+
+ipv4addr	=	exact IP
+ipv4addr	~=	regex
+
+network		=	exact IP/mask
+network		~=	regex
+
+network_container	=	exact IP/mask
+
+unmanaged	=	0 (no) or 1 (yes)
+
+contains_address	=	exact IP
+			(only works with network_view, all others ignored)
+
+member		=	dhcpmember,ipv4address[,name]
+member		=	ipv6dhcpmember,ipv6address[,name]
+member		=	msdhcpserver,ipv4address
+
+*EA_NAME	=	case sensitive match
+*EA_NAME	:=	case insensitive match
+*EA_NAME	~=	case sensitive match / contains
+*EA_NAME	~:=	case insensitive match / contains
+
