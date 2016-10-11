@@ -108,11 +108,11 @@ function script:Connect-GridMaster {
         $credential = New-Object System.Management.Automation.PSCredential ($username, $secure_pw)
 
         # Set the base URI for all WAPI requests
-        $uri_base = "https://$grid_master/wapi/$wapi_ver"
+        $uri_base = "https://$grid_master/wapi/$wapi_ver/"
         Write-Debug "[DEBUG:Connect-GridMaster] URI base = $uri_base"
 
         # Set the URI to retrieve the Grid object
-        $uri = "$uri_base/grid"
+        $uri = $uri_base + "grid"
 
         # Make a connection to the Grid and print the detailed error message as necessary
         try {
@@ -148,6 +148,11 @@ function script:Connect-GridMaster {
         $script:ib_wapi_ver    = $wapi_ver
 
         Write-Host "# Connected to Grid: '$grid_name'"
+
+        # Update the schema version to the latest if we are still using v1.3
+        if ($wapi_ver -eq "v1.3") {
+            Set-IBWapiVersion
+        }
 
         return $true
     }

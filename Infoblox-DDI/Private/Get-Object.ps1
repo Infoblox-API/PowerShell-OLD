@@ -32,7 +32,7 @@ function script:Get-Object {
     BEGIN {
         Write-Debug '[DEBUG:Get-Object] Begin'
 
-        if (!$ib_session) {
+        if (!$script:ib_session) {
             Write-Error "[ERROR:Get-Object] Try creating a session first. 'Connect-GridMaster'"
             return $false
         }
@@ -48,23 +48,23 @@ function script:Get-Object {
 
         # Set up the URI
         $uri_return_type = "_return_type=json-pretty"
-        $uri = "$ib_uri_base/$_ref"+'?'+$uri_return_type
+        $uri = $script:ib_uri_base + "$_ref" + '?' + $uri_return_type
 
         # Add the requested return fields to the URI
         if ($_return_fields) {
             # Replace '+' with '%2b'
-            $uri = "$uri"+'&'+"_return_fields%2b=$_return_fields"
+            $uri = "$uri" + '&' + "_return_fields%2b=$_return_fields"
         }
 
         # Set the limit for the maximum results to return
-        if ($script:ib_max_results) { $uri = "$uri"+'&'+"_max_results=$script:ib_max_results" }
+        if ($script:ib_max_results) { $uri = "$uri" + '&' + "_max_results=$script:ib_max_results" }
 
         # Debug the URI
         Write-Debug "[DEBUG:Get-Object] URI '$uri'"
 
         # Try to obtain the data and print an error message if there is one
         try {
-            $local_results = Invoke-WebRequest -Uri $uri -Method Get -WebSession $ib_session
+            $local_results = Invoke-WebRequest -Uri $uri -Method Get -WebSession $script:ib_session
         } catch {
             Write-Error "[ERROR:Get-Object] There was an error getting the data."
             Write-Error "[ERROR:Get-Object] URI '$uri'"

@@ -5,6 +5,9 @@
     .DESCRIPTION
         Retrieves the schema object from the Grid and displays it
 
+    .Parameter objType
+        Retrieves the schema for the selected object type and displays it
+
     .OUTPUTS
         Shows schema data from the Grid
 
@@ -14,6 +17,11 @@
 #>
 
 function script:Get-Schema {
+    Param (
+        [Parameter(Mandatory=$false,Position=0)]
+            [string]$objType
+    )
+
     BEGIN {
         Write-Debug "[DEBUG:Get-Schema] Begin"
     }
@@ -23,7 +31,11 @@ function script:Get-Schema {
 
     END {
         # Set the URI to retrieve the Grid object
-        $uri = "https://$script:ib_grid_master/wapi/v1.0/?_schema"
+        if (! [string]::IsNullorEmpty($objType)) {
+            $uri = $script:ib_uri_base + $objType + "?_schema"
+        } else {
+            $uri = $script:ib_uri_base + "?_schema"
+        }
         Write-Debug "[DEBUG:Get-Schema] URI = $uri"
 
         # Make a connection to the Grid and print the detailed error message as necessary

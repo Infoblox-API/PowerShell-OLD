@@ -45,7 +45,7 @@ function script:Find-Object {
         Write-Debug "[DEBUG:Find-Object] Begin"
 
         # Make sure we already have a session established
-        if (!$ib_session) {
+        if (!$script:ib_session) {
             Write-Error "[ERROR:Find-Object] Try creating a session first using 'Connect-GridMaster'"
             return $false
         }
@@ -59,20 +59,20 @@ function script:Find-Object {
 
         # Build the URI filter/search string
         if ($search_string) { $uri_filter = "search_string~=$search_string" }
-        if ($objtype)       { $uri_filter = "$uri_filter"+'&'+"objtype=$objtype" }
+        if ($objtype)       { $uri_filter = "$uri_filter" + '&' + "objtype=$objtype" }
 
         # Assemble the URI search string
-        $uri = "$ib_uri_base/search"+'?'+"$uri_filter"
+        $uri = $script:ib_uri_base + "search" + '?' + "$uri_filter"
 
         # Append the max results we want returned
-        if ($script:ib_max_results) { $uri = "$uri"+'&'+"_max_results=$script:ib_max_results" }
+        if ($script:ib_max_results) { $uri = "$uri" + '&' + "_max_results=$script:ib_max_results" }
 
         # Debug the URI
         Write-Debug "[DEBUG:Find-Object] URI '$uri'"
 
         # Send the request and print any error messages
         try {
-            $results = Invoke-RestMethod -Uri $uri -Method Get -WebSession $ib_session
+            $results = Invoke-RestMethod -Uri $uri -Method Get -WebSession $script:ib_session
         } catch {
             Write-Error "[ERROR:Find-Object] There was an error performing the search."
             # $_.ErrorDetails is absolutely useless here

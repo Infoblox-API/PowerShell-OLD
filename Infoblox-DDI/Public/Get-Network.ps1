@@ -8,6 +8,9 @@
     .Parameter _ref
         The network reference obtained from a 'find' operation
 
+    .Parameter return_fields
+        A list of comma separated return fields to be included in the results.
+
     .Parameter json
         Converts the data results to JSON format on return
 
@@ -26,6 +29,8 @@ function script:Get-Network {
         [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true,Position=0)]
             [string]$_ref,
         [Parameter(Mandatory=$false,Position=1)]
+            [string]$return_fields = "comment,extattrs,members",
+        [Parameter(Mandatory=$false,Position=2)]
             [switch]$json
     )
 
@@ -35,9 +40,7 @@ function script:Get-Network {
     }
 
     PROCESS {
-        Write-Verbose "[Get-Network] [$_ref] [$json]"
-        # Specify the extra fields to return
-        $return_fields = "comment,extattrs,members"
+        Write-Verbose "[Get-Network] [$_ref] [$return_fields] [$json]"
 
         # Get the data being requested
         Write-Debug "[DEBUG:Get-Network] Retrieve network object"

@@ -52,14 +52,14 @@ function script:Set-WapiVersion {
                 $lastItem       = $ibschema.supported_versions.Count - 1
                 $highestVersion = $ibschema.supported_versions.Item($lastItem)
                 $wapi_ver       = "v" + $highestVersion
-                Write-Host "[Set-WapiVersion] Automatically selected '$wapi_ver' from the schema"
+                Write-Verbose "[Set-WapiVersion] Automatically selected '$wapi_ver' from the schema"
             }
         }
 
         # Validate that the string is in the correct format
         if ($wapi_ver -match "v[1-9]{1,}\.*[0-9]*") {
             Write-Debug "[DEBUG:Set-WapiVersion] '$wapi_ver' matched regex" 
-            Write-Host "[Set-WapiVersion] Changing WAPI version from '$script:ib_wapi_ver' to '$wapi_ver'"
+            Write-Verbose "[Set-WapiVersion] Changing WAPI version from '$script:ib_wapi_ver' to '$wapi_ver'"
             $okay = $true
         }
         else { 
@@ -73,7 +73,7 @@ function script:Set-WapiVersion {
             $script:ib_wapi_ver = $wapi_ver
             Write-Host "WAPI Version: '$script:ib_wapi_ver'"
 
-            $script:ib_uri_base = "https://$script:ib_grid_master/wapi/$script:ib_wapi_ver"
+            $script:ib_uri_base = "https://$script:ib_grid_master/wapi/$script:ib_wapi_ver/"
             Write-Host "URI Base    : '$script:ib_uri_base'"
         }
 

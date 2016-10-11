@@ -224,7 +224,7 @@ function script:Find-Network {
         }
 
         # Build the URI base object filter
-        $uri = "$ib_uri_base/network" + '?'
+        $uri = $script:ib_uri_base + "network" + '?'
 
         # Process the array we just built
         if ($search_array.Count -gt 0) {
@@ -260,7 +260,7 @@ function script:Find-Network {
         Write-Debug "[DEBUG:Find-Network] End"
         # Send the request and print any error messages
         try {
-            $local_results = Invoke-RestMethod -Uri $uri -Method Get -WebSession $ib_session
+            $local_results = Invoke-RestMethod -Uri $uri -Method Get -WebSession $script:ib_session
         } catch {
             Write-Error "[ERROR:Find-Network] There was an error performing the network search."
             # $_.ErrorDetails is absolutely useless here
